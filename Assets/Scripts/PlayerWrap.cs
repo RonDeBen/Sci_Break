@@ -8,8 +8,34 @@ public class PlayerWrap : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		wwObj = gameObject;
+
 		screenHeight = 2f * Camera.main.orthographicSize;
 		screenWidth = screenHeight * Camera.main.aspect;
+
+		if(wwObj.tag.Equals("Player")){
+			SpriteRenderer spr = wwObj.GetComponentInChildren<SpriteRenderer>();
+
+			BoxCollider2D bc2d = wwObj.GetComponent<BoxCollider2D>();
+
+			float newWidth, newHeight;
+			
+			if(spr.bounds.size.y > spr.bounds.size.x){
+				Transform tr = wwObj.GetComponentInChildren<Transform>();
+				tr.transform.Rotate(0,0,-90);
+				bc2d.size = new Vector3(spr.bounds.size.y, spr.bounds.size.x, 0f);
+				newWidth = (screenWidth * 0.33f) / spr.bounds.size.x;
+				newHeight = (screenHeight * 0.2f) / spr.bounds.size.y;
+				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
+				transform.localScale = new Vector3(newWidth, newHeight, 1f);
+			}else{
+				bc2d.size = spr.bounds.size;
+				newWidth = (screenWidth * 0.33f) / spr.bounds.size.x;
+				newHeight = (screenHeight * 0.2f) / spr.bounds.size.y;
+				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
+				transform.localScale = new Vector3(newWidth, newHeight, 1f);
+			}
+		}
+
 		SetupWorldWrap();
 	}
 	
@@ -23,6 +49,7 @@ public class PlayerWrap : MonoBehaviour {
 		for(int k = 0; k < 2; k++){
 			ww[k] = Instantiate(wwObj, Vector3.zero, Quaternion.identity) as GameObject;
 			ww[k].GetComponent<PlayerWrap>().enabled = false;
+			ww[k].GetComponent<Transform>().rotation = wwObj.GetComponentInChildren<Transform>().rotation;
 		}
 		PositionShips();
 	}

@@ -7,7 +7,8 @@ using System.Linq;
 [RequireComponent(typeof(MeshRenderer))]
 public class CreateBricks : MonoBehaviour {
 
-	public Texture2D tesselate;
+	public Texture2D tesselate, brickTex;
+	public bool minecraft = false;
 	public int columns, rows;
 	public Vector3 brickScale = new Vector3(1,1,1);
 	public float perctangeOfScreen;
@@ -31,8 +32,7 @@ public class CreateBricks : MonoBehaviour {
 
 		Vector3 bottomLeft = new Vector3(0f, screenHeight * (1 - perctangeOfScreen), 0f);
 
-		Vector2[] uvs = new Vector2[]
-					{
+		Vector2[] uvs = new Vector2[]{
 			            new Vector2(0, 0),
                         new Vector2(1, 0),
                         new Vector2(1, 1),
@@ -65,13 +65,15 @@ public class CreateBricks : MonoBehaviour {
 			for(int y = 0; y < rows; y++){
 
 				Color brickColor = modeColor(x, y, pictureTile, tesselate);
-				if(brickColor.a >0.9){
+				if(brickColor.a > 0.9){
 
 					brickNumber++;
 
 					GameObject go = new GameObject("New_Mesh");
 					MeshFilter mf = go.gameObject.AddComponent<MeshFilter>();
+					Material diffuse = gameObject.GetComponent<MeshRenderer>().sharedMaterial;
 					go.AddComponent<MeshRenderer>();
+					go.GetComponent<Renderer>().sharedMaterial = diffuse;
 
 					mf.mesh = mesh;
 					mesh.RecalculateBounds();
@@ -82,8 +84,11 @@ public class CreateBricks : MonoBehaviour {
 					BoxCollider2D bc2d = go.gameObject.AddComponent<BoxCollider2D>();
 					bc2d.size = screenTile;
 
-					mf.renderer.material.shader = Shader.Find("Bumped Diffuse");
-					go.renderer.material.color = brickColor;
+					mf.GetComponent<Renderer>().material.shader = Shader.Find("Standard");
+					if(minecraft)
+						go.GetComponent<Renderer>().material.SetTexture("_MainTex", brickTex);
+					go.GetComponent<Renderer>().material.SetColor("_EmissionColor", brickColor);
+					go.GetComponent<Renderer>().material.EnableKeyword("_EMISSION");
 				}
 				
 			}

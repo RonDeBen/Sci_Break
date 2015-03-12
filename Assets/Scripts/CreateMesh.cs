@@ -53,7 +53,7 @@ public class CreateMesh : MonoBehaviour
     {
         var mesh = new Mesh();
         var mf = GetComponent<MeshFilter>();
-        mf.renderer.material.SetTexture("_MainTex", Texture);
+        mf.GetComponent<Renderer>().material.SetTexture("_MainTex", Texture);
         mf.mesh = mesh;
  
         var tileSizeX = 1.0f / NumTilesX;
