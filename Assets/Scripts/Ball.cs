@@ -12,8 +12,11 @@ public class Ball : MonoBehaviour {
 	private CreateBricks cb;
 	private bool stasis = true;
 	private int numberOfBricks;
+	private bool going_up;
+	private Rigidbody2D rb2d;
 	// Use this for initialization
 	void Start () {
+		rb2d = gameObject.GetComponent<Rigidbody2D>() as Rigidbody2D;
 		c2d = gameObject.GetComponent<Collider2D>() as CircleCollider2D;
 		//radius = c2d.radius;
 		screenHeight = 2f * Camera.main.orthographicSize;
@@ -24,6 +27,7 @@ public class Ball : MonoBehaviour {
 		numberOfBricks = cb.getBrickNumber();
 
 		SpriteRenderer spr = gameObject.GetComponentInChildren<SpriteRenderer>();
+		Debug.Log(spr.bounds.size);
 		if(spr.bounds.size.x > spr.bounds.size.y){
 			radius = spr.bounds.size.x / 2f;
 		}else{
@@ -31,12 +35,29 @@ public class Ball : MonoBehaviour {
 		}
 		c2d.radius = radius;
 
-		//mm.loopSound("Rorschach Game Jam Jam", true);
+		mm.loopSound("Rorschach Game Jam Jam", true);
 		//mm.loopSound("Very_Hedgie", true);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		bool up = Input.GetKey("up");
+		bool down = Input.GetKey("down");
+
+		if(up){
+			rb2d.gravityScale=-1;
+		}
+		else if(down){
+			rb2d.gravityScale=5;
+		}
+		else
+		{
+			rb2d.gravityScale=1;
+		}
+
+
+
 		if(!stasis){
 			ballVelocity = GetComponent<Rigidbody2D>().velocity;
 

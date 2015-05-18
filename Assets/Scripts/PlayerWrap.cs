@@ -25,14 +25,14 @@ public class PlayerWrap : MonoBehaviour {
 				bc2d.size = new Vector3(spr.bounds.size.y, spr.bounds.size.x, 0f);
 				newWidth = (screenWidth * 0.33f) / spr.bounds.size.x;
 				newHeight = (screenHeight * 0.2f) / spr.bounds.size.y;
-				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
 				transform.localScale = new Vector3(newWidth, newHeight, 1f);
+				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
 			}else{
 				bc2d.size = spr.bounds.size;
 				newWidth = (screenWidth * 0.33f) / spr.bounds.size.x;
 				newHeight = (screenHeight * 0.2f) / spr.bounds.size.y;
-				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
 				transform.localScale = new Vector3(newWidth, newHeight, 1f);
+				transform.position = new Vector3(transform.position.x, spr.bounds.size.y / 2, transform.position.z);
 			}
 		}
 

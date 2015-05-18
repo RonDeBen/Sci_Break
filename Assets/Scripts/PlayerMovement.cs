@@ -14,6 +14,8 @@ public class PlayerMovement : MonoBehaviour {
 	void Update () {
 		bool left = Input.GetKey("left");
 		bool right = Input.GetKey("right");
+		bool up = Input.GetKey("up");
+		bool down = Input.GetKey("down");
 
 		if(left){
 			GetComponent<Rigidbody2D>().velocity = Vector2.right * -speed;
@@ -21,6 +23,17 @@ public class PlayerMovement : MonoBehaviour {
 		if(right){
 			GetComponent<Rigidbody2D>().velocity = Vector2.right * speed;
 		}
+		/*if(down){
+			GetComponent<Rigidbody2D>().velocity = Vector2.up * -speed;
+		}
+		if(up){
+			GetComponent<Rigidbody2D>().velocity = Vector2.up * speed;
+		}
+		if(!(left || right||up||down)){
+			GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+		}*/
+
+
 		if(!(left || right)){
 			GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 		}
