@@ -29,11 +29,16 @@ public class Ball : MonoBehaviour {
 		SpriteRenderer spr = gameObject.GetComponentInChildren<SpriteRenderer>();
 		Debug.Log(spr.bounds.size);
 		if(spr.bounds.size.x > spr.bounds.size.y){
-			radius = spr.bounds.size.x / 2f;
+			float scale = 0.9f / transform.localScale.x; 
+			radius = (spr.bounds.size.x / 2f) * scale;
+            c2d.radius = radius;
+            radius = (spr.bounds.size.x / 2f);
 		}else{
-			radius = spr.bounds.size.y / 2f;
+            float scale = 0.9f / transform.localScale.y;
+            radius = (spr.bounds.size.y / 2f) * scale;
+            c2d.radius = radius;
+            radius = (spr.bounds.size.y / 2f);
 		}
-		c2d.radius = radius;
 
 		mm.loopSound("Rorschach Game Jam Jam", true);
 		//mm.loopSound("Very_Hedgie", true);
@@ -84,7 +89,7 @@ public class Ball : MonoBehaviour {
 	            }
 	        }else{
 	        	Vector3 paddlePos = paddle.transform.position;
-	        	transform.position = new Vector3(paddlePos.x, paddlePos.y + 1.5f, paddlePos.z);
+	        	transform.position = new Vector3(paddlePos.x, paddlePos.y + 2f, paddlePos.z);
 	        	if(Input.GetKeyDown("space")){
 	        		stasis = false;
 	        		GetComponent<Rigidbody2D>().velocity = Vector2.up * -speed;
